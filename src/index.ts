@@ -2,6 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 
+import { history } from "./history/index.js";
 import { profile } from "./profile/index.js";
 import { logger as customLogger } from "./utils/logger.js";
 
@@ -15,6 +16,7 @@ app.get("/", (c) => {
 const api = new Hono();
 
 api.route("profile", profile);
+api.route("history", history);
 
 app.route("api", api);
 

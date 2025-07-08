@@ -1,3 +1,5 @@
+export const defaultDate = "2099-01-01";
+
 export interface History {
     description: string;
     date: string;

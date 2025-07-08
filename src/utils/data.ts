@@ -12,3 +12,16 @@ export function isAllFieldsValid(obj: Record<string, any>): boolean {
         (value) => value !== undefined && value !== null,
     );
 }
+
+export function differenceByProps<A, B, K extends keyof A & keyof B>(
+    arrA: A[],
+    arrB: B[],
+    props: K[],
+): A[] {
+    return arrA.filter(
+        (a) =>
+            !arrB.some((b) =>
+                props.every((prop) => (a as any)[prop] === (b as any)[prop]),
+            ),
+    );
+}

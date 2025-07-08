@@ -59,7 +59,7 @@ model UserProfile {
   relation       String?
   contactPhone   String?
   avatar         String?
-  medicalHistory MedicalHistory? @relation
+  medicalHistory MedicalHistory[] @relation
   hospitalization Hospitalization? @relation
   stentPlacement StentPlacement? @relation
   preExamination PreoperativeExaminationForStentRemoval? @relation
@@ -69,11 +69,12 @@ model UserProfile {
 
 model MedicalHistory {
   id            Int         @id @default(autoincrement())
-  userProfileId String         @unique
+  userProfileId String        
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   description String?
   date        String?
   type        HistoryType?
+  @@unique([userProfileId, date, description], name: "history_unique")
   @@map("medical_histories")
 }
 
