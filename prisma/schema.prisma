@@ -26,11 +26,6 @@ model User {
   type UserType
 }
 
-enum Sex {
-  male
-  female
-}
-
 enum HistoryType {
   PAST_HISTORY
   SURGERY_HISTORY
@@ -48,9 +43,9 @@ enum HistoryType {
 }
 
 model UserProfile {
-  id             Int              @id
+  id             String              @id
   name           String?
-  sex            Sex?
+  sex            String?
   ethnicity      String?
   age            Int?
   birth          String?
@@ -74,7 +69,7 @@ model UserProfile {
 
 model MedicalHistory {
   id            Int         @id @default(autoincrement())
-  userProfileId Int         @unique
+  userProfileId String         @unique
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   description String?
   date        String?
@@ -84,7 +79,7 @@ model MedicalHistory {
 
 model Hospitalization {
   id                      Int      @id @default(autoincrement())
-  userProfileId           Int         @unique
+  userProfileId           String         @unique
   userProfile             UserProfile @relation(fields: [userProfileId], references: [id])
   admissionTime           String?
   bodyTemperature         Float?
@@ -157,7 +152,7 @@ model Hospitalization {
 
 model StentPlacement {
   id                     Int    @id @default(autoincrement())  
-  userProfileId Int         @unique
+  userProfileId String         @unique
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   operationTime          String?
   stentManufacturers     String?
@@ -174,7 +169,7 @@ model StentPlacement {
 
 model PreoperativeExaminationForStentRemoval {
   id                       Int    @id @default(autoincrement())  
-  userProfileId Int         @unique
+  userProfileId String         @unique
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   admissionTime          String?
   bodyTemperature        Float?
@@ -252,7 +247,7 @@ model PreoperativeExaminationForStentRemoval {
 
 model StentRemoval {
   id                     Int    @id @default(autoincrement())  
-  userProfileId Int         @unique
+  userProfileId String         @unique
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   operationTime          String?
   dateOfSurgery          String?
@@ -268,7 +263,7 @@ model StentRemoval {
 
 model Followup {
   id                      Int      @id @default(autoincrement())
-  userProfileId           Int         @unique
+  userProfileId           String         @unique
   userProfile             UserProfile @relation(fields: [userProfileId], references: [id])
   admissionTime           String?
   bodyTemperature         Float?

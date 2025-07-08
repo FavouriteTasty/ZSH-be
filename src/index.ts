@@ -2,17 +2,19 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 
-import { insert } from "./insert/index.js";
+import { profile } from "./profile/index.js";
+import { logger as customLogger } from "./utils/logger.js";
 
 const app = new Hono();
 
-app.use(logger());
+app.use(logger(customLogger));
 app.get("/", (c) => {
     return c.text("Hello Hono!");
 });
 
 const api = new Hono();
-api.route("insert", insert);
+
+api.route("profile", profile);
 
 app.route("api", api);
 
