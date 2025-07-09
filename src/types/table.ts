@@ -6,7 +6,7 @@ export interface History {
 }
 
 export type UserProfile = {
-    id: number;
+    id: string;
     name: string;
     sex: "male" | "female";
     ethnicity: string;
@@ -39,11 +39,11 @@ export type MedicalHistory = {
 };
 
 export type HospitalizationBasic = {
-    admissionTime: Date;
+    admissionTime: string;
     bodyTemperature: number;
     heartRate: number;
     breathe: number;
-    bloodPressure: string;
+    bloodPressure: number;
     height: number;
     weight: number;
     bmi: number;
@@ -161,8 +161,8 @@ export type StentPlacement = {
 
 export type PreoperativeExaminationForStentRemovalExtra = {
     sweetsIntake: string;
-    emotionalEatingFrequency: number;
-    foodServings: number;
+    emotionalEatingFrequency: string;
+    foodServings: string;
     physicalActivityStatus: string;
     foodComposition: string;
 };

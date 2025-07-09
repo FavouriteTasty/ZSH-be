@@ -176,7 +176,7 @@ model PreoperativeExaminationForStentRemoval {
   bodyTemperature        Float?
   heartRate              Int?
   breathe                Int?
-  bloodPressure          String?
+  bloodPressure          Float?
   height                 Float?
   weight                 Float?
   bmi                    Float?
@@ -239,9 +239,9 @@ model PreoperativeExaminationForStentRemoval {
   eqVas         Float?
   patientFrontPhoto String?
   patientSidePhoto  String?
-  sweetsintake             String?
-  emotionalEatingFrequency Int?
-  foodServings             Int?
+  sweetsIntake             String?
+  emotionalEatingFrequency String?
+  foodServings             String?
   physicalActivityStatus   String?
   foodComposition          String?
 }
@@ -270,7 +270,7 @@ model Followup {
   bodyTemperature         Float?
   heartRate               Int?
   breathe                 Int?
-  bloodPressure           String?
+  bloodPressure           Float?
   height                  Float?
   weight                  Float?
   bmi                     Float?

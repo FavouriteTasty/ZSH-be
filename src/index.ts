@@ -4,6 +4,7 @@ import { logger } from "hono/logger";
 
 import { history } from "./history/index.js";
 import { hospitalization } from "./hospitalization/index.js";
+import { preExamination } from "./preoperative/index.js";
 import { profile } from "./profile/index.js";
 import { stentPlacement } from "./stentPlacement/index.js";
 import { stentRemoval } from "./stentRemoval/index.js";
@@ -22,6 +23,7 @@ api.route("profile", profile);
 api.route("history", history);
 api.route("hospitalization", hospitalization);
 api.route("stentPlacement", stentPlacement);
+api.route("preoperative", preExamination);
 api.route("stentRemoval", stentRemoval);
 
 app.route("api", api);
