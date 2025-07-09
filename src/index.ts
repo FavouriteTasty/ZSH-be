@@ -2,6 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 
+import { followup } from "./followup/index.js";
 import { history } from "./history/index.js";
 import { hospitalization } from "./hospitalization/index.js";
 import { preExamination } from "./preoperative/index.js";
@@ -25,6 +26,7 @@ api.route("hospitalization", hospitalization);
 api.route("stentPlacement", stentPlacement);
 api.route("preoperative", preExamination);
 api.route("stentRemoval", stentRemoval);
+api.route("followup", followup);
 
 app.route("api", api);
 
