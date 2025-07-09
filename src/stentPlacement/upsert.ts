@@ -1,17 +1,17 @@
-import { type Hospitalization } from "@prisma/client";
+import { type StentPlacement } from "@prisma/client";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 
 import { prisma } from "../prisma/index.js";
-import { filterUndefinedFields } from "../utils/data.js";
+import { filterUndefinedFields, isAllFieldsValid } from "../utils/data.js";
 import { logger } from "../utils/logger.js";
 
 const app = new Hono();
 
-const upsert = async (data: Hospitalization, id: string) => {
+const upsert = async (data: StentPlacement, id: string) => {
     const filtered = filterUndefinedFields(data);
 
-    await prisma.hospitalization.upsert({
+    await prisma.stentPlacement.upsert({
         where: {
             userProfileId: id,
         },
@@ -20,11 +20,14 @@ const upsert = async (data: Hospitalization, id: string) => {
     });
 };
 
-const validate = (hospitalization: Hospitalization) => {
-    if (hospitalization === undefined) {
+const validate = (stentPlacement: StentPlacement) => {
+    if (stentPlacement === undefined) {
         throw new HTTPException(400, {
-            message: "Hospitalizations is undefined",
+            message: "StentPlacement is undefined",
         });
+    }
+    if (!isAllFieldsValid(stentPlacement)) {
+        throw new HTTPException(400, { message: "Bad stentPlacement" });
     }
 };
 
@@ -33,14 +36,18 @@ app.post("/", async (c) => {
         const body = await c.req.json();
         const profileId = body.id;
         const data = body.data;
+        console.log(data);
+
         validate(data);
         data.userProfileId = profileId;
         await upsert(data, profileId);
-        return c.json("create hospitalization success");
+        return c.json("create stentPlacement success");
     } catch (error) {
+        console.log(error);
+
         logger("error", (error as Error).name, (error as Error).message);
         throw new HTTPException(400, {
-            message: "Bad hospitalization",
+            message: "Bad stentPlacement",
             cause: error,
         });
     }
