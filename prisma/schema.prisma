@@ -86,7 +86,7 @@ model Hospitalization {
   bodyTemperature         Float?
   heartRate               Int?
   breathe                 Int?
-  bloodPressure           String?
+  bloodPressure           Float?
   height                  Float?
   weight                  Float?
   bmi                     Float?

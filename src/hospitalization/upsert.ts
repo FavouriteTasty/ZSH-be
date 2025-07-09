@@ -1,45 +1,46 @@
-import { type UserProfile } from "@prisma/client";
+import { type Hospitalization } from "@prisma/client";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 
 import { prisma } from "../prisma/index.js";
-import { filterUndefinedFields, isAllFieldsValid } from "../utils/data.js";
+import { filterUndefinedFields } from "../utils/data.js";
 import { logger } from "../utils/logger.js";
 
 const app = new Hono();
 
-const upsert = async (data: UserProfile) => {
+const upsert = async (data: Hospitalization, id: string) => {
     const filtered = filterUndefinedFields(data);
 
-    await prisma.userProfile.upsert({
+    await prisma.hospitalization.upsert({
         where: {
-            id: filtered.id,
+            userProfileId: id,
         },
         update: filtered,
         create: filtered,
     });
 };
 
-const validate = (profile: UserProfile) => {
+const validate = (profile: Hospitalization) => {
     if (profile === undefined) {
-        throw new HTTPException(400, { message: "Profile is undefined" });
-    }
-    if (!isAllFieldsValid(profile)) {
-        throw new HTTPException(400, { message: "Bad profile" });
+        throw new HTTPException(400, {
+            message: "Hospitalizations is undefined",
+        });
     }
 };
 
 app.post("/", async (c) => {
     try {
         const body = await c.req.json();
+        const profileId = body.id;
         const data = body.data;
         validate(data);
-        await upsert(data);
-        return c.json("create profile success");
+        data.userProfileId = profileId;
+        await upsert(data, profileId);
+        return c.json("create hospitalization success");
     } catch (error) {
         logger("error", (error as Error).name, (error as Error).message);
         throw new HTTPException(400, {
-            message: "Bad profile",
+            message: "Bad hospitalization",
             cause: error,
         });
     }

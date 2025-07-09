@@ -1,14 +1,13 @@
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 
-import { history2MedicalHistory } from "./utils.js";
 import { prisma } from "../prisma/index.js";
 import { logger } from "../utils/logger.js";
 
 const app = new Hono();
 
 const get = async (id: string) => {
-    return await prisma.medicalHistory.findMany({
+    return await prisma.hospitalization.findUnique({
         where: { userProfileId: id },
     });
 };
@@ -16,10 +15,8 @@ const get = async (id: string) => {
 app.get("/:id", async (c) => {
     try {
         const id = c.req.param("id");
-        const history = await get(id);
-        if (history === null)
-            throw new HTTPException(400, { message: "History not found" });
-        return c.json(history2MedicalHistory(history));
+        const hospitalization = await get(id);
+        return c.json(hospitalization);
     } catch (error) {
         logger("error", (error as Error).name, (error as Error).message);
         throw new HTTPException(400, {

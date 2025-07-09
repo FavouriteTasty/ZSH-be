@@ -20,7 +20,7 @@ app.get("/:id", async (c) => {
             throw new HTTPException(400, { message: "Profile not found" });
         return c.json(profile);
     } catch (error) {
-        logger("error", (error as Error).message);
+        logger("error", (error as Error).name, (error as Error).message);
         throw new HTTPException(400, {
             message: "Bad profile id",
             cause: error,
