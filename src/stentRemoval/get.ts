@@ -7,7 +7,7 @@ import { logger } from "../utils/logger.js";
 const app = new Hono();
 
 const get = async (id: string) => {
-    return await prisma.stentPlacement.findUnique({
+    return await prisma.stentRemoval.findUnique({
         where: { userProfileId: id },
     });
 };

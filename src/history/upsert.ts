@@ -86,7 +86,12 @@ app.post("/", async (c) => {
         await upserts(history, exclude);
         return c.json("upsert history success");
     } catch (error) {
-        logger("error", (error as Error).name, (error as Error).message);
+        logger(
+            "error",
+            (error as Error).name,
+            (error as Error).message,
+            (error as Error).stack ?? "",
+        );
         throw new HTTPException(400, {
             message: "Bad history",
             cause: error,

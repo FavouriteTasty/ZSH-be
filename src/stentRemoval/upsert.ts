@@ -1,4 +1,4 @@
-import { type StentPlacement } from "@prisma/client";
+import { type StentRemoval } from "@prisma/client";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 
@@ -8,10 +8,10 @@ import { logger } from "../utils/logger.js";
 
 const app = new Hono();
 
-const upsert = async (data: StentPlacement, id: string) => {
+const upsert = async (data: StentRemoval, id: string) => {
     const filtered = filterUndefinedFields(data);
 
-    await prisma.stentPlacement.upsert({
+    await prisma.stentRemoval.upsert({
         where: {
             userProfileId: id,
         },
@@ -20,14 +20,14 @@ const upsert = async (data: StentPlacement, id: string) => {
     });
 };
 
-const validate = (stentPlacement: StentPlacement) => {
+const validate = (stentPlacement: StentRemoval) => {
     if (stentPlacement === undefined) {
         throw new HTTPException(400, {
-            message: "StentPlacement is undefined",
+            message: "StentRemoval is undefined",
         });
     }
     if (!isAllFieldsValid(stentPlacement)) {
-        throw new HTTPException(400, { message: "Bad stentPlacement" });
+        throw new HTTPException(400, { message: "Bad stentRemoval" });
     }
 };
 
@@ -39,7 +39,7 @@ app.post("/", async (c) => {
         validate(data);
         data.userProfileId = profileId;
         await upsert(data, profileId);
-        return c.json("create stentPlacement success");
+        return c.json("create stentRemoval success");
     } catch (error) {
         logger(
             "error",
@@ -48,7 +48,7 @@ app.post("/", async (c) => {
             (error as Error).stack ?? "",
         );
         throw new HTTPException(400, {
-            message: "Bad stentPlacement",
+            message: "Bad stentRemoval",
             cause: error,
         });
     }

@@ -37,7 +37,12 @@ app.post("/", async (c) => {
         await upsert(data);
         return c.json("create profile success");
     } catch (error) {
-        logger("error", (error as Error).name, (error as Error).message);
+        logger(
+            "error",
+            (error as Error).name,
+            (error as Error).message,
+            (error as Error).stack ?? "",
+        );
         throw new HTTPException(400, {
             message: "Bad profile",
             cause: error,

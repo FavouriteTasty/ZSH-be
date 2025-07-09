@@ -21,7 +21,12 @@ app.get("/:id", async (c) => {
             throw new HTTPException(400, { message: "History not found" });
         return c.json(history2MedicalHistory(history));
     } catch (error) {
-        logger("error", (error as Error).name, (error as Error).message);
+        logger(
+            "error",
+            (error as Error).name,
+            (error as Error).message,
+            (error as Error).stack ?? "",
+        );
         throw new HTTPException(400, {
             message: "Bad profile id",
             cause: error,

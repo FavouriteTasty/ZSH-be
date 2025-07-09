@@ -18,7 +18,12 @@ app.get("/:id", async (c) => {
         const hospitalization = await get(id);
         return c.json(hospitalization);
     } catch (error) {
-        logger("error", (error as Error).name, (error as Error).message);
+        logger(
+            "error",
+            (error as Error).name,
+            (error as Error).message,
+            (error as Error).stack ?? "",
+        );
         throw new HTTPException(400, {
             message: "Bad profile id",
             cause: error,
