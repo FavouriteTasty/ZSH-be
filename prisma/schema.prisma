@@ -64,7 +64,7 @@ model UserProfile {
   stentPlacement StentPlacement? @relation
   preExamination PreoperativeExaminationForStentRemoval? @relation
   stentRemoval StentRemoval? @relation
-  followup Followup? @relation
+  followup Followup[] @relation
 }
 
 model MedicalHistory {
@@ -264,7 +264,7 @@ model StentRemoval {
 
 model Followup {
   id                      Int      @id @default(autoincrement())
-  userProfileId           String         @unique
+  userProfileId           String        
   userProfile             UserProfile @relation(fields: [userProfileId], references: [id])
   admissionTime           String?
   bodyTemperature         Float?
@@ -334,4 +334,5 @@ model Followup {
   patientFrontPhoto String?
   patientSidePhoto  String?
   improvementOfPreviousDiseases String?
+  @@unique([userProfileId, admissionTime], name: "followup_unique")
 }
