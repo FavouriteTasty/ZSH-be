@@ -19,6 +19,66 @@ export const medicalHistory2History = (
             type: "PAST_HISTORY" as const,
             userProfileId: profileId,
         })),
+        ...tmh.surgeryHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "SURGERY_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.allergicHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "ALLERGIC_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.vaccinationHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "VACCINATION_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.importantDrugHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "IMPORTANT_DRUG_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.bloodTransfusionHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "BLOOD_TRANSFUSION_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.smokingHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "SMOKING_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.drinkingHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "DRINKING_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.menstrualHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "MENSTRUAL_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.maritalHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "MARITAL_HISTORY" as const,
+            userProfileId: profileId,
+        })),
+        ...tmh.familyHistory.map((i) => ({
+            description: i.description,
+            date: i.date,
+            type: "FAMILY_HISTORY" as const,
+            userProfileId: profileId,
+        })),
     ];
 };
 
