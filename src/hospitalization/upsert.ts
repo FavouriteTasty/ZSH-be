@@ -20,7 +20,7 @@ const upsert = async (data: Hospitalization, id: string) => {
     });
 };
 
-const validate = (hospitalization: Hospitalization) => {
+export const validate = (hospitalization: Hospitalization) => {
     if (hospitalization === undefined) {
         throw new HTTPException(400, {
             message: "Hospitalizations is undefined",

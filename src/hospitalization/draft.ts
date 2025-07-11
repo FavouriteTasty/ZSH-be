@@ -2,6 +2,7 @@ import type { Hospitalization } from "@prisma/client";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 
+import { validate } from "./upsert.js";
 import { prisma } from "../prisma/index.js";
 import { filterUndefinedFields } from "../utils/data.js";
 import { logger } from "../utils/logger.js";
@@ -44,14 +45,6 @@ const upsert = async (data: Hospitalization, id: string) => {
         update: filtered,
         create: filtered,
     });
-};
-
-const validate = (hospitalization: Hospitalization) => {
-    if (hospitalization === undefined) {
-        throw new HTTPException(400, {
-            message: "Hospitalizations is undefined",
-        });
-    }
 };
 
 draftUpsert.post("/", async (c) => {
