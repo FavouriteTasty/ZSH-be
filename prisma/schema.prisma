@@ -44,6 +44,8 @@ enum HistoryType {
 
 model UserProfile {
   id             String              @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   name           String?
   sex            String?
   ethnicity      String?

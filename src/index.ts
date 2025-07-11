@@ -9,6 +9,7 @@ import { preExamination } from "./preoperative/index.js";
 import { profile } from "./profile/index.js";
 import { stentPlacement } from "./stentPlacement/index.js";
 import { stentRemoval } from "./stentRemoval/index.js";
+import { table } from "./table/index.js";
 import { logger as customLogger } from "./utils/logger.js";
 
 const app = new Hono();
@@ -20,6 +21,7 @@ app.get("/", (c) => {
 
 const api = new Hono();
 
+api.route("table", table);
 api.route("profile", profile);
 api.route("history", history);
 api.route("hospitalization", hospitalization);
