@@ -67,6 +67,12 @@ model UserProfile {
   preExamination PreoperativeExaminationForStentRemoval? @relation
   stentRemoval StentRemoval? @relation
   followup Followup[] @relation
+  medicalHistoryDraft MedicalHistoryDraft[] @relation
+  hospitalizationDraft HospitalizationDraft? @relation
+  stentPlacementDraft StentPlacementDraft? @relation
+  preExaminationDraft PreoperativeExaminationForStentRemovalDraft? @relation
+  stentRemovalDraft StentRemovalDraft? @relation
+  followupDraft FollowupDraft[] @relation
 }
 
 model MedicalHistory {
@@ -77,7 +83,16 @@ model MedicalHistory {
   date        String?
   type        HistoryType?
   @@unique([userProfileId, date, description], name: "history_unique")
-  @@map("medical_histories")
+}
+
+model MedicalHistoryDraft {
+  id            Int         @id @default(autoincrement())
+  userProfileId String        
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  description String?
+  date        String?
+  type        HistoryType?
+  @@unique([userProfileId, date, description], name: "history_unique")
 }
 
 model Hospitalization {
@@ -153,7 +168,97 @@ model Hospitalization {
   patientSidePhoto  String?
 }
 
+model HospitalizationDraft {
+  id                      Int      @id @default(autoincrement())
+  userProfileId           String         @unique
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  admissionTime           String?
+  bodyTemperature         Float?
+  heartRate               Int?
+  breathe                 Int?
+  bloodPressure           Float?
+  height                  Float?
+  weight                  Float?
+  bmi                     Float?
+  chestCircumference      Float?
+  abdominalCircumference  Float?
+  hips                    Float?
+  bigArm                  Float?
+  forearm                 Float?
+  redBloodCellCount       Float?
+  leukocyteCount          Float?
+  platelets               Float?
+  hemoglobin              Float?
+  alt                     Float?
+  ast                     Float?
+  tb                      Float?
+  cb                      Float?
+  totalProtein            Float?
+  albumin                 Float?
+  globulin                Float?
+  urea                    Float?
+  creatinine              Float?
+  na                      Float?
+  k                       Float?
+  cl                      Float?
+  fastingBloodGlucose     Float?
+  postprandialBloodSugar  Float?
+  glycatedHemoglobin      Float?
+  tsh      Float?
+  tpo      Float?
+  ft3      Float?
+  ft4      Float?
+  fsh      Float?
+  lh       Float?
+  e2       Float?
+  p        Float?
+  t        Float?
+  insulin  Float?
+  thymosin Float?
+  pyy      Float?
+  glp1     Float?
+  totalCholesterol Float?
+  hdl              Float?
+  ldl              Float?
+  triglycerides    Float?
+  apoe             Float?
+  apob             Float?
+  lipoproteinAlpha Float?
+  water          Float?
+  protein        Float?
+  inorganicSalt  Float?
+  bodyFat        Float?
+  skeletalMuscle Float?
+  leanBodyMass   Float?
+  actionAbility Float?
+  selfCare      Float?
+  dailyActivity Float?
+  pain          Float?
+  anxiety       Float?
+  healthStatus  Float?
+  eqVas         Float?
+  patientFrontPhoto String?
+  patientSidePhoto  String?
+}
+
 model StentPlacement {
+  id                     Int    @id @default(autoincrement())  
+  userProfileId String         @unique
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  operationTime          String?
+  stentManufacturers     String?
+  dateOfSurgery          String?
+  complication           String?
+  surgeon                String?
+  surgeryLocation        String?
+  descriptionOfSurgery   String?
+  intraoperativePictures String?
+  fastingDuration        Int?
+  discomfortComplaint    String?
+  dischargeTime          String?
+}
+
+model StentPlacementDraft {
   id                     Int    @id @default(autoincrement())  
   userProfileId String         @unique
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
@@ -248,6 +353,84 @@ model PreoperativeExaminationForStentRemoval {
   foodComposition          String?
 }
 
+model PreoperativeExaminationForStentRemovalDraft {
+  id                       Int    @id @default(autoincrement())  
+  userProfileId String         @unique
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  admissionTime          String?
+  bodyTemperature        Float?
+  heartRate              Int?
+  breathe                Int?
+  bloodPressure          Float?
+  height                 Float?
+  weight                 Float?
+  bmi                    Float?
+  chestCircumference     Float?
+  abdominalCircumference Float?
+  hips                   Float?
+  bigArm                 Float?
+  forearm                Float?
+  redBloodCellCount Float?
+  leukocyteCount    Float?
+  platelets         Float?
+  hemoglobin        Float?
+  alt          Float?
+  ast          Float?
+  tb           Float?
+  cb           Float?
+  totalProtein Float?
+  albumin      Float?
+  globulin     Float?
+  urea         Float?
+  creatinine   Float?
+  na Float?
+  k  Float?
+  cl Float?
+  fastingBloodGlucose    Float?
+  postprandialBloodSugar Float?
+  glycatedHemoglobin     Float?
+  tsh      Float?
+  tpo      Float?
+  ft3      Float?
+  ft4      Float?
+  fsh      Float?
+  lh       Float?
+  e2       Float?
+  p        Float?
+  t        Float?
+  insulin  Float?
+  thymosin Float?
+  pyy      Float?
+  glp1     Float?
+  totalCholesterol Float?
+  hdl              Float?
+  ldl              Float?
+  triglycerides    Float?
+  apoe             Float?
+  apob             Float?
+  lipoproteinAlpha Float?
+  water          Float?
+  protein        Float?
+  inorganicSalt  Float?
+  bodyFat        Float?
+  skeletalMuscle Float?
+  leanBodyMass   Float?
+  actionAbility Float?
+  selfCare      Float?
+  dailyActivity Float?
+  pain          Float?
+  anxiety       Float?
+  healthStatus  Float?
+  eqVas         Float?
+  patientFrontPhoto String?
+  patientSidePhoto  String?
+  sweetsIntake             String?
+  emotionalEatingFrequency String?
+  foodServings             String?
+  physicalActivityStatus   String?
+  foodComposition          String?
+}
+
 model StentRemoval {
   id                     Int    @id @default(autoincrement())  
   userProfileId String         @unique
@@ -264,7 +447,98 @@ model StentRemoval {
   dischargeTime          String?
 }
 
+model StentRemovalDraft {
+  id                     Int    @id @default(autoincrement())  
+  userProfileId String         @unique
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  operationTime          String?
+  dateOfSurgery          String?
+  complication           String?
+  surgeon                String?
+  surgeryLocation        String?
+  descriptionOfSurgery   String?
+  intraoperativePictures String?
+  fastingDuration        Int?
+  discomfortComplaint    String?
+  dischargeTime          String?
+}
+
 model Followup {
+  id                      Int      @id @default(autoincrement())
+  userProfileId           String        
+  userProfile             UserProfile @relation(fields: [userProfileId], references: [id])
+  admissionTime           String?
+  bodyTemperature         Float?
+  heartRate               Int?
+  breathe                 Int?
+  bloodPressure           Float?
+  height                  Float?
+  weight                  Float?
+  bmi                     Float?
+  chestCircumference      Float?
+  abdominalCircumference  Float?
+  hips                    Float?
+  bigArm                  Float?
+  forearm                 Float?
+  redBloodCellCount       Float?
+  leukocyteCount          Float?
+  platelets               Float?
+  hemoglobin              Float?
+  alt                     Float?
+  ast                     Float?
+  tb                      Float?
+  cb                      Float?
+  totalProtein            Float?
+  albumin                 Float?
+  globulin                Float?
+  urea                    Float?
+  creatinine              Float?
+  na                      Float?
+  k                       Float?
+  cl                      Float?
+  fastingBloodGlucose     Float?
+  postprandialBloodSugar  Float?
+  glycatedHemoglobin      Float?
+  tsh      Float?
+  tpo      Float?
+  ft3      Float?
+  ft4      Float?
+  fsh      Float?
+  lh       Float?
+  e2       Float?
+  p        Float?
+  t        Float?
+  insulin  Float?
+  thymosin Float?
+  pyy      Float?
+  glp1     Float?
+  totalCholesterol Float?
+  hdl              Float?
+  ldl              Float?
+  triglycerides    Float?
+  apoe             Float?
+  apob             Float?
+  lipoproteinAlpha Float?
+  water          Float?
+  protein        Float?
+  inorganicSalt  Float?
+  bodyFat        Float?
+  skeletalMuscle Float?
+  leanBodyMass   Float?
+  actionAbility Float?
+  selfCare      Float?
+  dailyActivity Float?
+  pain          Float?
+  anxiety       Float?
+  healthStatus  Float?
+  eqVas         Float?
+  patientFrontPhoto String?
+  patientSidePhoto  String?
+  improvementOfPreviousDiseases String?
+  @@unique([userProfileId, admissionTime], name: "followup_unique")
+}
+
+model FollowupDraft {
   id                      Int      @id @default(autoincrement())
   userProfileId           String        
   userProfile             UserProfile @relation(fields: [userProfileId], references: [id])
