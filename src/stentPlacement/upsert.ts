@@ -20,13 +20,16 @@ const upsert = async (data: StentPlacement, id: string) => {
     });
 };
 
-const validate = (stentPlacement: StentPlacement) => {
+export const validate = (
+    stentPlacement: StentPlacement,
+    allFieldsValid: boolean = true,
+) => {
     if (stentPlacement === undefined) {
         throw new HTTPException(400, {
             message: "StentPlacement is undefined",
         });
     }
-    if (!isAllFieldsValid(stentPlacement)) {
+    if (allFieldsValid && !isAllFieldsValid(stentPlacement)) {
         throw new HTTPException(400, { message: "Bad stentPlacement" });
     }
 };
