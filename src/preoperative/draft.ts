@@ -1,12 +1,40 @@
-import { type PreoperativeExaminationForStentRemoval } from "@prisma/client";
+import type { PreoperativeExaminationForStentRemoval } from "@prisma/client";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 
+import { validate } from "./upsert.js";
 import { prisma } from "../prisma/index.js";
 import { filterUndefinedFields } from "../utils/data.js";
 import { logger } from "../utils/logger.js";
 
-const app = new Hono();
+const draftGet = new Hono();
+
+const get = async (id: string) => {
+    return await prisma.preoperativeExaminationForStentRemovalDraft.findUnique({
+        where: { userProfileId: id },
+    });
+};
+
+draftGet.get("/:id", async (c) => {
+    try {
+        const id = c.req.param("id");
+        const preExamination = await get(id);
+        return c.json(preExamination);
+    } catch (error) {
+        logger(
+            "error",
+            (error as Error).name,
+            (error as Error).message,
+            (error as Error).stack ?? "",
+        );
+        throw new HTTPException(400, {
+            message: "Bad profile id",
+            cause: error,
+        });
+    }
+});
+
+const draftUpsert = new Hono();
 
 const upsert = async (
     data: PreoperativeExaminationForStentRemoval,
@@ -14,7 +42,7 @@ const upsert = async (
 ) => {
     const filtered = filterUndefinedFields(data);
 
-    await prisma.preoperativeExaminationForStentRemoval.upsert({
+    await prisma.preoperativeExaminationForStentRemovalDraft.upsert({
         where: {
             userProfileId: id,
         },
@@ -23,17 +51,7 @@ const upsert = async (
     });
 };
 
-export const validate = (
-    preExamination: PreoperativeExaminationForStentRemoval,
-) => {
-    if (preExamination === undefined) {
-        throw new HTTPException(400, {
-            message: "PreExamination is undefined",
-        });
-    }
-};
-
-app.post("/", async (c) => {
+draftUpsert.post("/", async (c) => {
     try {
         const body = await c.req.json();
         const profileId = body.id;
@@ -56,4 +74,4 @@ app.post("/", async (c) => {
     }
 });
 
-export default app;
+export { draftGet, draftUpsert };

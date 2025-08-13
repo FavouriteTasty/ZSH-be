@@ -3,7 +3,9 @@ export function filterUndefinedFields<T extends Record<string, any>>(
     data: T,
 ): T {
     return Object.fromEntries(
-        Object.entries(data).filter(([, value]) => value !== undefined),
+        Object.entries(data).filter(
+            ([, value]) => value !== undefined && value !== null,
+        ),
     ) as T;
 }
 
