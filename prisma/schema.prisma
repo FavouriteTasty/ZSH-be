@@ -612,3 +612,10 @@ model FollowupDraft {
   improvementOfPreviousDiseases String?
   @@unique([userProfileId, admissionTime], name: "followup_unique")
 }
+
+model InviteAdd {
+  id             String              @id
+  name           String
+  link           String
+  createdAt      DateTime @default(now())
+}
