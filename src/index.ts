@@ -1,7 +1,9 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
+import { authRoute } from "./auth/route.js";
 import { followup } from "./followup/index.js";
 import { history } from "./history/index.js";
 import { hospitalization } from "./hospitalization/index.js";
@@ -21,6 +23,18 @@ app.get("/", (c) => {
 });
 
 const api = new Hono();
+
+app.use(
+    "*",
+    cors({
+        origin: ["*"],
+        allowHeaders: ["Content-Type", "Authorization", "X-Refresh-Token"],
+        allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+        credentials: false,
+    }),
+);
+
+api.route("auth", authRoute);
 
 api.route("table", table);
 api.route("profile", profile);
