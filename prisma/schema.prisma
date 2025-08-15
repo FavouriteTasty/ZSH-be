@@ -78,7 +78,7 @@ model UserProfile {
 model MedicalHistory {
   id            Int         @id @default(autoincrement())
   userProfileId String        
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   description String?
   date        String?
   type        HistoryType?
@@ -88,7 +88,7 @@ model MedicalHistory {
 model MedicalHistoryDraft {
   id            Int         @id @default(autoincrement())
   userProfileId String        
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   description String?
   date        String?
   type        HistoryType?
@@ -98,7 +98,7 @@ model MedicalHistoryDraft {
 model Hospitalization {
   id                      Int      @id @default(autoincrement())
   userProfileId           String         @unique
-  userProfile             UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile             UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   admissionTime           String?
   bodyTemperature         Float?
   heartRate               Int?
@@ -171,7 +171,7 @@ model Hospitalization {
 model HospitalizationDraft {
   id                      Int      @id @default(autoincrement())
   userProfileId           String         @unique
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   admissionTime           String?
   bodyTemperature         Float?
   heartRate               Int?
@@ -244,7 +244,7 @@ model HospitalizationDraft {
 model StentPlacement {
   id                     Int    @id @default(autoincrement())  
   userProfileId String         @unique
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   operationTime          String?
   stentManufacturers     String?
   dateOfSurgery          String?
@@ -261,7 +261,7 @@ model StentPlacement {
 model StentPlacementDraft {
   id                     Int    @id @default(autoincrement())  
   userProfileId String         @unique
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   operationTime          String?
   stentManufacturers     String?
   dateOfSurgery          String?
@@ -278,7 +278,7 @@ model StentPlacementDraft {
 model PreoperativeExaminationForStentRemoval {
   id                       Int    @id @default(autoincrement())  
   userProfileId String         @unique
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   admissionTime          String?
   bodyTemperature        Float?
   heartRate              Int?
@@ -356,7 +356,7 @@ model PreoperativeExaminationForStentRemoval {
 model PreoperativeExaminationForStentRemovalDraft {
   id                       Int    @id @default(autoincrement())  
   userProfileId String         @unique
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   admissionTime          String?
   bodyTemperature        Float?
   heartRate              Int?
@@ -434,7 +434,7 @@ model PreoperativeExaminationForStentRemovalDraft {
 model StentRemoval {
   id                     Int    @id @default(autoincrement())  
   userProfileId String         @unique
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   operationTime          String?
   dateOfSurgery          String?
   complication           String?
@@ -450,7 +450,7 @@ model StentRemoval {
 model StentRemovalDraft {
   id                     Int    @id @default(autoincrement())  
   userProfileId String         @unique
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   operationTime          String?
   dateOfSurgery          String?
   complication           String?
@@ -466,7 +466,7 @@ model StentRemovalDraft {
 model Followup {
   id                      Int      @id @default(autoincrement())
   userProfileId           String        
-  userProfile             UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile             UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   admissionTime           String?
   bodyTemperature         Float?
   heartRate               Int?
@@ -541,7 +541,7 @@ model Followup {
 model FollowupDraft {
   id                      Int      @id @default(autoincrement())
   userProfileId           String        
-  userProfile             UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfile             UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
   admissionTime           String?
   bodyTemperature         Float?
   heartRate               Int?
