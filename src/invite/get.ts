@@ -35,9 +35,9 @@ app.get("/:id", async (c) => {
             (error as Error).message,
             (error as Error).stack ?? "",
         );
-        throw new HTTPException(400, {
+        return c.json({
+            code: 400,
             message: (error as Error).message,
-            cause: error,
         });
     }
 });
