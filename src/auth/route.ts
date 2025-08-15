@@ -17,7 +17,7 @@ export const authRoute = new Hono<{ Variables: AppVariables }>();
 
 authRoute.post("/login", async (c) => {
     const secret = process.env.JWT_SECRET as string;
-    const accessExp = process.env.ACCESS_EXPIRES_IN || "10m";
+    const accessExp = process.env.ACCESS_EXPIRES_IN || "30d";
     const refreshExp = process.env.REFRESH_EXPIRES_IN || "30d";
 
     const body = await c.req.json().catch(() => ({}));
@@ -49,8 +49,8 @@ authRoute.post("/login", async (c) => {
 
 authRoute.post("/refresh", async (c) => {
     const secret = process.env.JWT_SECRET as string;
-    const accessExp = process.env.ACCESS_EXPIRES_IN || "10m";
-    const refreshExp = process.env.REFRESH_EXPIRES_IN || "7d";
+    const accessExp = process.env.ACCESS_EXPIRES_IN || "30d";
+    const refreshExp = process.env.REFRESH_EXPIRES_IN || "30d";
 
     // 约定：X-Refresh-Token: Bearer <refreshToken>
     const hdr = c.req.header("X-Refresh-Token") || "";

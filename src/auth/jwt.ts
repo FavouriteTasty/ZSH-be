@@ -14,7 +14,7 @@ export interface AccessPayload extends JWTPayload {
 export async function signAccessToken(
     payload: Omit<AccessPayload, "exp" | "iat" | "nbf">,
     secret: string,
-    exp = "10m",
+    exp = "30d",
 ) {
     return await new SignJWT(payload)
         .setProtectedHeader({ alg })

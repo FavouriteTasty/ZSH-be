@@ -25,7 +25,9 @@ export const auth =
             const payload = await verifyToken<AccessPayload>(token, secret);
             c.set("user", payload);
             await next();
-        } catch {
+        } catch (error) {
+            console.log(error);
+
             throw new HTTPException(401, {
                 message: "Invalid or expired token",
             });
