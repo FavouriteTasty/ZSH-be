@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 
 import { prisma } from "../prisma/index.js";
-import { filterUndefinedFields, isAllFieldsValid } from "../utils/data.js";
+import { filterUndefinedFields } from "../utils/data.js";
 import { logger } from "../utils/logger.js";
 
 const app = new Hono();
@@ -24,9 +24,9 @@ const validate = (profile: UserProfile) => {
     if (profile === undefined) {
         throw new HTTPException(400, { message: "Profile is undefined" });
     }
-    if (!isAllFieldsValid(profile)) {
-        throw new HTTPException(400, { message: "Bad profile" });
-    }
+    // if (!isAllFieldsValid(profile)) {
+    //     throw new HTTPException(400, { message: "Bad profile" });
+    // }
 };
 
 app.post("/", async (c) => {
