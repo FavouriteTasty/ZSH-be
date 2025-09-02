@@ -4,6 +4,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
 import { authRoute } from "./auth/route.js";
+import { exportExcel } from "./excel/index.js";
 import { followup } from "./followup/index.js";
 import { history } from "./history/index.js";
 import { hospitalization } from "./hospitalization/index.js";
@@ -45,6 +46,7 @@ api.route("preoperative", preExamination);
 api.route("stentRemoval", stentRemoval);
 api.route("followup", followup);
 api.route("invite", invite);
+api.route("excel", exportExcel);
 
 app.route("api", api);
 

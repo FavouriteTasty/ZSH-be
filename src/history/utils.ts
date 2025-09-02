@@ -118,3 +118,45 @@ export const history2MedicalHistory = (
         familyHistory: filterHistory(history, "FAMILY_HISTORY"),
     };
 };
+
+export const history2String = (history: History) => {
+    return `病史: ${history.description}, 时间: ${history.date}`;
+};
+
+export const medicalHistory2String = (history: TableMedicalHistory) => {
+    return {
+        pastHistory: history.pastHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        surgeryHistory: history.surgeryHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        allergicHistory: history.allergicHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        vaccinationHistory: history.vaccinationHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        importantDrugHistory: history.importantDrugHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        bloodTransfusionHistory: history.bloodTransfusionHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        smokingHistory: history.smokingHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        drinkingHistory: history.drinkingHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        menstrualHistory: history.menstrualHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        maritalHistory: history.maritalHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+        familyHistory: history.familyHistory
+            .map((i) => history2String(i))
+            .join(" ; "),
+    };
+};
