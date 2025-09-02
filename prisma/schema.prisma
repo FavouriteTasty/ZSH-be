@@ -535,6 +535,7 @@ model Followup {
   patientFrontPhoto String?
   patientSidePhoto  String?
   improvementOfPreviousDiseases String?
+  period                String?
   @@unique([userProfileId, admissionTime], name: "followup_unique")
 }
 
@@ -610,6 +611,7 @@ model FollowupDraft {
   patientFrontPhoto String?
   patientSidePhoto  String?
   improvementOfPreviousDiseases String?
+  period                String?
   @@unique([userProfileId, admissionTime], name: "followup_unique")
 }
 

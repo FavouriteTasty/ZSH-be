@@ -88,6 +88,21 @@ export function toStentRemovalWithPrefix(
     );
 }
 
+export function toWithDynamicPrefix<Base extends object, Ext extends object>(
+    src: Ext | null,
+    baseKeys: readonly (keyof Base & string)[],
+    prefix: string,
+): Record<string, unknown> | null {
+    if (!src) return null;
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(src as Record<string, unknown>)) {
+        out[
+            (baseKeys as unknown as string[]).includes(k) ? `${prefix}_${k}` : k
+        ] = v;
+    }
+    return out;
+}
+
 const hospitalizationTemplate = [
     {
         header: "采集时间",
@@ -390,3 +405,14 @@ export const columns = [
         width: SMALL_WIDTH,
     },
 ];
+
+export const followupColumn = (period: string) => {
+    return [
+        ...hospitalizationColumns(`随访-${period}`, `followup_${period}`),
+        {
+            header: `随访-${period}-既往疾病改善情况`,
+            key: `followup_${period}_improvementOfPreviousDiseases`,
+            width: SMALL_WIDTH,
+        },
+    ];
+};

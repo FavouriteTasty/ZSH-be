@@ -173,6 +173,7 @@ export type StentRemoval = Omit<StentPlacement, "stentManufacturers">;
 
 export type FollowupExtra = {
     improvementOfPreviousDiseases: string;
+    period: string;
 };
 
 export type Followup = FollowupExtra & Hospitalization;

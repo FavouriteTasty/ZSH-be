@@ -1,11 +1,14 @@
 import { type UserProfile } from "@prisma/client";
 import ExcelJS from "exceljs";
 
+import { FollowupKeys } from "./keys.js";
 import {
     columns,
+    followupColumn,
     toHospitalizationWithPrefix,
     toPreoperativeExaminationForStentRemovalWithPrefix,
     toStentRemovalWithPrefix,
+    toWithDynamicPrefix,
 } from "./type.js";
 import {
     history2MedicalHistory,
@@ -13,7 +16,7 @@ import {
 } from "../history/utils.js";
 import { prisma } from "../prisma/index.js";
 
-async function aggregation(profiles: UserProfile[]) {
+async function aggregation(profiles: UserProfile[], periods: string[]) {
     return await Promise.all(
         profiles.map(async (profile) => {
             const history = await prisma.medicalHistory.findMany({
@@ -34,7 +37,23 @@ async function aggregation(profiles: UserProfile[]) {
                 where: { userProfileId: profile.id },
             });
 
+            const followups = await prisma.followup.findMany({
+                where: { userProfileId: profile.id, period: { in: periods } },
+            });
+            const followupsWithPrefix = followups.flatMap((followup) =>
+                toWithDynamicPrefix(
+                    followup,
+                    FollowupKeys,
+                    `followup_${followup.period ?? "default"}`,
+                ),
+            );
+            const followupsWithPrefixObject = followupsWithPrefix.reduce(
+                (acc, cur) => Object.assign(acc as object, cur),
+                {},
+            ) as object;
+
             return {
+                ...followupsWithPrefixObject,
                 ...toStentRemovalWithPrefix(stentRemoval),
                 ...toPreoperativeExaminationForStentRemovalWithPrefix(
                     preoperativeExaminationForStentRemoval,
@@ -48,14 +67,15 @@ async function aggregation(profiles: UserProfile[]) {
     );
 }
 
-export async function ExportExcel() {
+export async function ExportExcel(periods: string[]) {
     const profiles = await prisma.userProfile.findMany();
     const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
         filename: "all-data.xlsx",
     });
     const sheet = workbook.addWorksheet("AllData");
-    sheet.columns = columns;
-    const pages = await aggregation(profiles);
+    sheet.columns = [...columns, ...periods.flatMap(followupColumn)];
+
+    const pages = await aggregation(profiles, periods);
     console.log(pages);
 
     for (const row of pages) {
