@@ -1,0 +1,1 @@
+scp -r ZSH-be ubuntu@121.4.76.60:/home/ubuntu/
