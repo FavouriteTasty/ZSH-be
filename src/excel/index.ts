@@ -10,7 +10,8 @@ exportExcel.post("/", async (c) => {
     const body = await c.req.json();
     const periods = (body.data ?? []) as string[];
     const buffer = await ExportExcel(periods);
-    const filename = `${periods.join(",")}-${new Date().toISOString().slice(0, 10)}.xlsx`;
+    const filename = `${periods.length > 0 ? periods.join(",") : "all"}-${new Date().toISOString().slice(0, 10)}.xlsx`;
+
     const encodedFilename = encodeURIComponent(filename);
 
     return c.body(buffer, 200, {
