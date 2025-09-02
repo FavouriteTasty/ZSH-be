@@ -4,7 +4,7 @@ import { ExportExcel } from "./excel.js";
 import period from "./period.js";
 import { auth } from "../auth/middlewares.js";
 
-const exportExcel = new Hono();
+const exportExcel = new Hono().use("*", auth());
 
 exportExcel.post("/", async (c) => {
     const body = await c.req.json();

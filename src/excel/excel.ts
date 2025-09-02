@@ -74,7 +74,6 @@ export async function ExportExcel(periods: string[]) {
     sheet.columns = [...columns, ...periods.flatMap(followupColumn)];
 
     const pages = await aggregation(profiles, periods);
-    console.log(pages);
 
     for (const row of pages) {
         sheet.addRow(row).commit();
