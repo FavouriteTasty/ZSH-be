@@ -16,7 +16,7 @@ import {
 } from "../history/utils.js";
 import { prisma } from "../prisma/index.js";
 
-async function aggregation(profiles: UserProfile[], periods: string[]) {
+export async function aggregation(profiles: UserProfile[], periods: string[]) {
     return await Promise.all(
         profiles.map(async (profile) => {
             const history = await prisma.medicalHistory.findMany({
@@ -69,9 +69,7 @@ async function aggregation(profiles: UserProfile[], periods: string[]) {
 
 export async function ExportExcel(periods: string[]) {
     const profiles = await prisma.userProfile.findMany();
-    const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
-        filename: "all-data.xlsx",
-    });
+    const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("AllData");
     sheet.columns = [...columns, ...periods.flatMap(followupColumn)];
 
@@ -81,5 +79,7 @@ export async function ExportExcel(periods: string[]) {
     for (const row of pages) {
         sheet.addRow(row).commit();
     }
-    await workbook.commit();
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    return buffer;
 }

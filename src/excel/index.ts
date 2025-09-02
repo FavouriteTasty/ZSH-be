@@ -9,9 +9,14 @@ const exportExcel = new Hono();
 exportExcel.post("/", async (c) => {
     const body = await c.req.json();
     const periods = (body.data ?? []) as string[];
-    await ExportExcel(periods);
-    return c.json({
-        message: "success",
+    const buffer = await ExportExcel(periods);
+    const filename = `${periods.join(",")}-${new Date().toISOString().slice(0, 10)}.xlsx`;
+    const encodedFilename = encodeURIComponent(filename);
+
+    return c.body(buffer, 200, {
+        "Content-Type":
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "Content-Disposition": `attachment; filename*=UTF-8''${encodedFilename}; filename="${Date.now()}.xlsx"`,
     });
 });
 
