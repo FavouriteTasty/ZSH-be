@@ -165,7 +165,9 @@ model Hospitalization {
   healthStatus  Float?
   eqVas         Float?
   patientFrontPhoto String?
+  patientFrontPhotoThumbnail String?
   patientSidePhoto  String?
+  patientSidePhotoThumbnail String?
 }
 
 model HospitalizationDraft {
@@ -238,7 +240,9 @@ model HospitalizationDraft {
   healthStatus  Float?
   eqVas         Float?
   patientFrontPhoto String?
+  patientFrontPhotoThumbnail String?
   patientSidePhoto  String?
+  patientSidePhotoThumbnail String?
 }
 
 model StentPlacement {
@@ -253,6 +257,7 @@ model StentPlacement {
   surgeryLocation        String?
   descriptionOfSurgery   String?
   intraoperativePictures String?
+  intraoperativePicturesThumbnail String?
   fastingDuration        Int?
   discomfortComplaint    String?
   dischargeTime          String?
@@ -270,6 +275,7 @@ model StentPlacementDraft {
   surgeryLocation        String?
   descriptionOfSurgery   String?
   intraoperativePictures String?
+  intraoperativePicturesThumbnail String?
   fastingDuration        Int?
   discomfortComplaint    String?
   dischargeTime          String?
@@ -345,7 +351,9 @@ model PreoperativeExaminationForStentRemoval {
   healthStatus  Float?
   eqVas         Float?
   patientFrontPhoto String?
+  patientFrontPhotoThumbnail String?
   patientSidePhoto  String?
+  patientSidePhotoThumbnail String?
   sweetsIntake             String?
   emotionalEatingFrequency String?
   foodServings             String?
@@ -423,7 +431,9 @@ model PreoperativeExaminationForStentRemovalDraft {
   healthStatus  Float?
   eqVas         Float?
   patientFrontPhoto String?
+  patientFrontPhotoThumbnail String?
   patientSidePhoto  String?
+  patientSidePhotoThumbnail String?
   sweetsIntake             String?
   emotionalEatingFrequency String?
   foodServings             String?
@@ -442,6 +452,7 @@ model StentRemoval {
   surgeryLocation        String?
   descriptionOfSurgery   String?
   intraoperativePictures String?
+  intraoperativePicturesThumbnail String?
   fastingDuration        Int?
   discomfortComplaint    String?
   dischargeTime          String?
@@ -458,6 +469,7 @@ model StentRemovalDraft {
   surgeryLocation        String?
   descriptionOfSurgery   String?
   intraoperativePictures String?
+  intraoperativePicturesThumbnail String?
   fastingDuration        Int?
   discomfortComplaint    String?
   dischargeTime          String?
@@ -533,7 +545,9 @@ model Followup {
   healthStatus  Float?
   eqVas         Float?
   patientFrontPhoto String?
+  patientFrontPhotoThumbnail String?
   patientSidePhoto  String?
+  patientSidePhotoThumbnail String?
   improvementOfPreviousDiseases String?
   period                String?
   @@unique([userProfileId, admissionTime], name: "followup_unique")
@@ -609,7 +623,9 @@ model FollowupDraft {
   healthStatus  Float?
   eqVas         Float?
   patientFrontPhoto String?
+  patientFrontPhotoThumbnail String?
   patientSidePhoto  String?
+  patientSidePhotoThumbnail String?
   improvementOfPreviousDiseases String?
   period                String?
   @@unique([userProfileId, admissionTime], name: "followup_unique")
